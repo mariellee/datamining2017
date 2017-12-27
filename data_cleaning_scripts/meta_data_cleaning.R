@@ -3,8 +3,11 @@ meta_data <- read.csv("C:/kool/andmekaeve/project/the-movies-dataset/movies_meta
 data <- meta_data %>% filter(popularity != "Beware Of Frost Bites")   #removed a useless line
 data <- data %>% select(-X)
 
+data <- data %>% filter(imdb_id != "")
+data <- data %>% filter(imdb_id != 0)
+
 # removing duplicated lines
-data <- data[!duplicated(data),]  
+data <- data[!duplicated(data),]
 
 # Changing duplicated lines, where only popularity is different
 temp <- data %>% filter(imdb_id == "tt0022879")

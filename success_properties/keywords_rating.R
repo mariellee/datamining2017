@@ -104,3 +104,15 @@ ggplot(friendship)+geom_bar(aes(x=reorder(names,mean_rating),y=mean_rating,fill 
 
 homo <- gender %>% filter(grepl('lesbian|gay',names))
 ggplot(homo)+geom_bar(aes(x=reorder(names,mean_rating),y=mean_rating,fill = factor(gender)),stat="identity") + labs(y='Mean rating (out of 2 ranking systems)',x='Tags (> 50 movies)') + geom_hline(yintercept = mean_all) + geom_text(aes(1,mean_all,label = "mean rating", vjust = -1))
+
+#pie chart
+tags_mean_rating_top_10 <- head(df %>% arrange(desc(mean_rating)), 10)
+sum_mean <- sum(tags_mean_rating_top_10$mean_rating)
+tags_mean_rating_top_10 <- tags_mean_rating_top_10 %>% mutate(relative = mean_rating/sum_mean)
+
+ggplot(tags_mean_rating_top_10, aes(x="", y=relative, fill=names))+ geom_bar(width = 1, stat = "identity") + coord_polar("y", start=0) + theme_minimal()
+
+
+
+
+

@@ -1,16 +1,16 @@
 movie_genres <- read.csv("C:/kool/andmekaeve/movies_project/Data/movie set kaggle/genre_movie.csv")
 genres <- read.csv("C:/kool/andmekaeve/movies_project/Data/movie set kaggle/genres.csv")
-ratings_fail <- read.csv("C:/kool/andmekaeve/project/the-movies-dataset/ratings.csv")
+ratings_fail <- read.csv("C:/kool/andmekaeve/project/the-movies-dataset/ratings_small.csv")
 
 library(dplyr)
 
 
 #THIS IS THE MOST IMPORTANT LINE. THE ID VALUE SAYS WHICH PERSON ARE WE RECOMMENDING TO
-user_ratings <- ratings_fail %>% filter(userId == 1)
+user_ratings <- ratings_fail %>% filter(userId == 2)
+user_ratings$rating <- user_ratings$rating * 2
+write.csv(user_ratings, file="C:/kool/andmekaeve/movies_project/Data/movie set kaggle/sample_input.csv")
 
 
-#removing ratings_fail from memory, becasue it takes it a lot
-rm(ratings_fail)
 
 # ratings will give weights for tags
 # weight = (rating - 5 / 2)
@@ -35,7 +35,6 @@ for (i in c(1:nrow(user_ratings))) {
 
 meta_data <- read.csv("C:/kool/andmekaeve/project/the-movies-dataset/movies_metadata.csv")
 movies <- meta_data %>% select(id, title)
-rm(meta_data)
 
 scores = c()
 movie_ids <- movies$id
@@ -49,3 +48,8 @@ for (m_id in movie_ids) {
   scores <- c(scores, score)
 }
 movies$prediction_score <- scores
+
+write.csv(movies, file="C:/kool/andmekaeve/movies_project/recommendation_system/samples/ratings_and_genre_out.csv")
+
+
+rm(list=ls()) #clearing memory

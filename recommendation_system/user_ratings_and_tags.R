@@ -1,4 +1,5 @@
 input <- read.csv("C:/kool/andmekaeve/movies_project/Data/movie set kaggle/sample_input.csv")
+input <- input %>% select (-X)
 movie_tags <- read.csv("C:/kool/andmekaeve/movies_project/Data/movie set kaggle/tag_movie.csv")
 tags <- read.csv("C:/kool/andmekaeve/movies_project/Data/movie set kaggle/tags.csv")
 
@@ -9,16 +10,14 @@ weights <- data.frame(id = tags$id, weight= rep(0, length(tags)))
 
 
 for (i in c(1:nrow(input))) {
-  user_rating_id <- input[i,2]
+  m_id <- input[i,2]
   rating <- input[i,3]
   weight <- (rating - 5) / 2
-  movie_data <- movie_tags %>% filter (id_movie == user_rating_id)
-  #todo
+  movie_data <- movie_tags %>% filter (id_movie == m_id)
   if (nrow(movie_data) != 0) {
-    genre_ids <- movie_data$genre_id
-    for (genre_id in as.numeric(as.character(genre_ids))) {
-      genre <- (genres %>% filter (genre_id == id))$id
-      row_nr <- which(weights[,1] == genre)
+    keyword_ids <- movie_data$id_keyword
+    for (keyword_id in as.numeric(as.character(keyword_ids))) {
+      row_nr <- which(weights[,1] == keyword_id)
       weights[row_nr, 2] <- weights[row_nr, 2] + weight
     }
   }
@@ -31,17 +30,17 @@ movies <- meta_data %>% select(id, title)
 scores = c()
 movie_ids <- movies$id
 for (m_id in movie_ids) {
-  genre_ids <- (movie_genres %>% filter (movie_id == m_id))$genre_id
-  size <- length(genre_ids)
+  tag_ids <- (movie_tags %>% filter (id_movie == m_id))$id_keyword
+  size <- length(tag_ids)
   score <- 0
-  for (g_id in genre_ids) {
-    score <- score + (weights %>% filter(id == g_id))$weight / size
+  for (t_id in tag_ids) {
+    score <- score + (weights %>% filter(id == t_id))$weight / size
   }
   scores <- c(scores, score)
 }
 movies$prediction_score <- scores
 
-write.csv(movies, file="C:/kool/andmekaeve/movies_project/recommendation_system/ratings_and_genre_out")
+write.csv(movies, file="C:/kool/andmekaeve/movies_project/recommendation_system/samples/ratings_and_tags_out.csv")
 
 
 rm(list=ls()) #clearing memory

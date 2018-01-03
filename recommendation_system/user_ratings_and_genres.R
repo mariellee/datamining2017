@@ -18,10 +18,10 @@ write.csv(user_ratings, file="C:/kool/andmekaeve/movies_project/Data/movie set k
 weights <- data.frame(id = genres$id, weight= rep(0, length(genres)))
 
 for (i in c(1:nrow(user_ratings))) {
-  user_rating_id <- user_ratings[i,2]
+  movie <- user_ratings[i,2]
   rating <- user_ratings[i,3]
   weight <- (rating - 5) / 2
-  movie_data <- movie_genres %>% filter (movie_id == user_rating_id)
+  movie_data <- movie_genres %>% filter (movie_id == movie)
   if (nrow(movie_data) != 0) {
     genre_ids <- movie_data$genre_id
     for (genre_id in as.numeric(as.character(genre_ids))) {

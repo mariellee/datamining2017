@@ -72,3 +72,5 @@ df$vote_count <- as.numeric(as.character(df$vote_count))
 df$revew_count <- as.numeric(as.character(df$revew_count))
 df$critics_count <- as.numeric(as.character(df$critics_count))
 df$prediction_score <- as.numeric(as.character(df$prediction_score))
+
+write.csv(df, file="C:/kool/andmekaeve/movies_project/recommendation_system/metascores.csv")

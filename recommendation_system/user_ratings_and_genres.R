@@ -1,14 +1,10 @@
 movie_genres <- read.csv("C:/kool/andmekaeve/movies_project/Data/movie set kaggle/genre_movie.csv")
 genres <- read.csv("C:/kool/andmekaeve/movies_project/Data/movie set kaggle/genres.csv")
-ratings_fail <- read.csv("C:/kool/andmekaeve/project/the-movies-dataset/ratings_small.csv")
+user_ratings <- read.csv("C:/kool/andmekaeve/movies_project/recommendation_system/samples/input.csv")
+user_ratings <- user_ratings %>% select (-X)
+
 
 library(dplyr)
-
-
-#THIS IS THE MOST IMPORTANT LINE. THE ID VALUE SAYS WHICH PERSON ARE WE RECOMMENDING TO
-user_ratings <- ratings_fail %>% filter(userId == 2)
-user_ratings$rating <- user_ratings$rating * 2
-write.csv(user_ratings, file="C:/kool/andmekaeve/movies_project/Data/movie set kaggle/sample_input.csv")
 
 
 
@@ -24,6 +20,7 @@ for (i in c(1:nrow(user_ratings))) {
   movie_data <- movie_genres %>% filter (movie_id == movie)
   if (nrow(movie_data) != 0) {
     genre_ids <- movie_data$genre_id
+    print("aaa")
     for (genre_id in as.numeric(as.character(genre_ids))) {
       genre <- (genres %>% filter (genre_id == id))$id
       row_nr <- which(weights[,1] == genre)

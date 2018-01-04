@@ -1,4 +1,4 @@
-input <- read.csv("C:/kool/andmekaeve/movies_project/Data/movie set kaggle/sample_input.csv")
+input <- read.csv("C:/kool/andmekaeve/movies_project/recommendation_system/samples/input.csv")
 input <- input %>% select (-X)
 #crew_names <- read.csv("C:/kool/andmekaeve/movies_project/Data/movie set kaggle/actors_first_5.csv")
 movie_crew <- read.csv("C:/kool/andmekaeve/movies_project/Data/movie set kaggle/movie_actor_first_5.csv")
@@ -39,7 +39,11 @@ for (m_id in movie_ids) {
 }
 movies$prediction_score <- scores
 
+movies <- movies %>% filter (!id %in% input$movieId)
+
 write.csv(movies, file="C:/kool/andmekaeve/movies_project/recommendation_system/samples/ratings_and_crew_out.csv")
 
 
 rm(list=ls()) #clearing memory
+
+

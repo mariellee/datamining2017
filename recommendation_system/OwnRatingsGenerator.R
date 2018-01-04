@@ -11,3 +11,5 @@ my_id <- 1111110
 
 output <- data.frame(userId = rep(my_id, length(ratings)), movieId = movie_ids, rating = ratings)
 write.csv(output, file="C:/kool/andmekaeve/movies_project/recommendation_system/samples/input.csv")
+
+rm(list=ls()) #clearing memory

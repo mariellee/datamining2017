@@ -1,4 +1,8 @@
-# correlations
+# this first part of the script is not used for the poster
+# because I could not find any correlation between budget/average voting and runtime/average voting
+
+
+# correlations budget, vote_average
 
 movie_data$budget <- as.numeric(movie_data$budget)
 
@@ -6,7 +10,7 @@ ggplot(movie_data, aes(x=budget,y=vote_average)) + geom_point(stat="identity")
 
 #create new table out of genres and movies 
 
-#get genres
+#get genre data
 genre <- read.csv("C:/Users/Marielle/Documents/datamining2017/Data/movie set kaggle/genres.csv")
 genre_movie <- read.csv("C:/Users/Marielle/Documents/datamining2017/Data/movie set kaggle/genre_movie.csv")
 
@@ -21,7 +25,7 @@ genre_movie_df <- genre_movie_df %>% select(movie_id, genre_id, budget, vote_ave
 
 ggplot(genre_movie_df) + geom_point(aes(x=budget,y=vote_average, color=as.factor(genre_id)), stat="identity")
 
-# sci-fi
+# test one genre
 sci_fi <- genre_movie_df %>% filter(genre_id==10752)
 ggplot(sci_fi, aes(x=budget,y=vote_average)) + geom_point(stat="identity")
 
@@ -94,7 +98,7 @@ genre_cor_run$cor <- cor_vec_run
 f <- genre_movie_run %>% filter(genre_id==14)
 ggplot(f) + geom_point(aes(x=runtime,y=vote_average), stat="identity")
 
-##runtime eintelen 50-250 minuten 
+ 
 
 
 vec_genre_id <- c(16, 35, 14, 28, 80, 27, 878)
@@ -107,7 +111,13 @@ ggplot(genre_movie_2, aes(x=name, y=vote_average,fill=name)) + geom_boxplot() + 
 
 genres_movie_2 %>% count()
 
-########################################
+
+
+
+
+
+
+################ 2ND PART
 movie_df <- movie_data %>% filter(vote_average > 0)
 
 # correlation regarding genre 

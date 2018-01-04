@@ -1,11 +1,10 @@
 movie_genres <- read.csv("C:/kool/andmekaeve/movies_project/Data/movie set kaggle/genre_movie.csv")
 genres <- read.csv("C:/kool/andmekaeve/movies_project/Data/movie set kaggle/genres.csv")
 user_ratings <- read.csv("C:/kool/andmekaeve/movies_project/recommendation_system/samples/input.csv")
-user_ratings <- user_ratings %>% select (-X)
-
 
 library(dplyr)
 
+user_ratings <- user_ratings %>% select (-X)
 
 
 # ratings will give weights for tags
@@ -20,7 +19,6 @@ for (i in c(1:nrow(user_ratings))) {
   movie_data <- movie_genres %>% filter (movie_id == movie)
   if (nrow(movie_data) != 0) {
     genre_ids <- movie_data$genre_id
-    print("aaa")
     for (genre_id in as.numeric(as.character(genre_ids))) {
       genre <- (genres %>% filter (genre_id == id))$id
       row_nr <- which(weights[,1] == genre)

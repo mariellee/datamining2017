@@ -13,7 +13,7 @@ meta_data$predicton_score <- rep(0, nrow(meta_data))
 suitable <- ratings %>% filter (movieId %in% input$movieId)
 
 users <- unique(suitable$userId)
-print(leng(users))
+print(length(users))
 counter <-  1
 
 for (user in users){
@@ -51,6 +51,7 @@ for (user in users){
   }
 }
 
-#movies <- movies %>% filter (!id %in% input$movieId)
+write.csv(meta_data, file="C:/kool/andmekaeve/movies_project/recommendation_system/samples/similar_people_out.csv")
+
 
 rm(list=ls()) #clearing memory

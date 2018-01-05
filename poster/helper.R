@@ -42,5 +42,11 @@ tags <- tags %>% select (title, prediction_score)
 
 
 # making general recommendations
-general <- csv.read("C:/kool/andmekaeve/movies_project/recommendation_system/samples/general_out.csv")
+general <- read.csv("C:/kool/andmekaeve/movies_project/recommendation_system/samples/general_out.csv")
+general <- general %>% top_n (10) %>% select (title, score)
+
+#other similar people recommendatins
+people_data <- read.csv("C:/kool/andmekaeve/movies_project/recommendation_system/samples/similar_people_out.csv")
+people_data$prediction_score <- people_data$predicton_score
+people_data <- people_data %>% top_n (6) %>% select (title, predicton_score)
 

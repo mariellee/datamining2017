@@ -43,6 +43,8 @@ for (m_id in movie_ids) {
   scores <- c(scores, score)
 }
 movies$prediction_score <- scores
+#removing rated movies
+movies <- movies %>% filter (!id %in% input$movieId)
 
 write.csv(movies, file="C:/kool/andmekaeve/movies_project/recommendation_system/samples/ratings_and_genre_out.csv")
 

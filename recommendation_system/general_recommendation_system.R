@@ -3,6 +3,7 @@ crew <- read.csv("C:/kool/andmekaeve/movies_project/recommendation_system/sample
 genre <- read.csv("C:/kool/andmekaeve/movies_project/recommendation_system/samples/ratings_and_genre_out.csv")
 tags <- read.csv("C:/kool/andmekaeve/movies_project/recommendation_system/samples/ratings_and_tags_out.csv")
 meta_data <- read.csv("C:/kool/andmekaeve/project/the-movies-dataset/movies_metadata.csv")
+other_people <- read.csv("C:/kool/andmekaeve/movies_project/recommendation_system/samples/similar_people_out.csv")
                      
 merged <- merge(meta, meta_data, by="imdb_id") 
 merged$original_title <- merged$original_title.x
@@ -15,6 +16,7 @@ result <- data.frame(id = meta$id, title = meta$original_title, score = meta$pre
 
 crew$prediction_score <- 2 * crew$prediction_score
 tags$prediction_score <- tags$prediction_score / 3
+other_people$predicton_score <- other_people$predicton_score / 100
 
 
 for (row_nr in c(1:nrow(result))) {
@@ -36,6 +38,10 @@ for (row_nr in c(1:nrow(result))) {
     score <- score + tags[tags_row, 4]
   }
     
+  others_row <- which(other_people[,2] == id)
+  if (length(others_row == 1)) {
+    score <- score + other_people[others_row, 4]
+  }
   
   result[row_nr, 3] <- score
 }

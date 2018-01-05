@@ -14,14 +14,33 @@ meta <- meta %>% filter (!id %in% input$movieId)
 result <- data.frame(id = meta$id, title = meta$original_title, score = meta$prediction_score)
 
 crew$prediction_score <- 2 * crew$prediction_score
+tags$prediction_score <- tags$prediction_score / 3
+
 
 for (row_nr in c(1:nrow(result))) {
   id <- result[row_nr, 1]
   score <- result[row_nr, 3]
   
   crew_row <- which(crew[,2] == id)
-  if (length(crew_row == 1))
+  if (length(crew_row == 1)) {
     score <- score + crew[crew_row, 4]
+  }
+  
+  genre_row <- which(genre[,2] == id)
+  if (length(genre_row == 1)) {
+    score <- score + genre[genre_row, 4]
+  }
+  
+  tags_row <- which(tags[,2] == id)
+  if (length(tags_row == 1)) {
+    score <- score + tags[tags_row, 4]
+  }
+    
   
   result[row_nr, 3] <- score
 }
+
+
+write.csv(result, file="C:/kool/andmekaeve/movies_project/recommendation_system/samples/general_out.csv")
+
+rm(list=ls()) #clearing memory

@@ -33,9 +33,14 @@ crew <- crew %>% arrange(desc(prediction_score))
 #making the data frame from top genre recommendations
 genre <- read.csv("C:/kool/andmekaeve/movies_project/recommendation_system/samples/ratings_and_genre_out.csv")
 genre <- genre %>% arrange(desc(prediction_score))
-genre <- genre %>% filter (title, prediction_score)
+genre <- genre %>% select (title, prediction_score)
 
 #making the data frame from top tags recommendations
 tags <- read.csv("C:/kool/andmekaeve/movies_project/recommendation_system/samples/ratings_and_genre_out.csv")
 tags <- tags %>% arrange(desc(prediction_score))
-tags <- tags %>% filter (title, prediction_score)
+tags <- tags %>% select (title, prediction_score)
+
+
+# making general recommendations
+general <- csv.read("C:/kool/andmekaeve/movies_project/recommendation_system/samples/general_out.csv")
+
